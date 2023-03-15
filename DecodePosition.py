@@ -26,7 +26,7 @@ def decodeCellIDs(cellIDs):
 #         layers=cellIDs // 100000
 #         return layers #ECAL:0-31, HCAL: 40-79
 
-def getAHCALPosition(chips, channels):
+def getAHCALPosition(chips, channels, tags):
     '''1: chips, channels: lists
        2: start (1,18)
        3: AHCAL'''
@@ -36,14 +36,15 @@ def getAHCALPosition(chips, channels):
     length = len(chips)
     assert len(channels) == len(chips)
     for i in range(length):
-        if chips[i] > -1 and chips[i] < 9 and channels[i] > -1 and channels[i] < 36:
+        if chips[i] > -1 and chips[i] < 9 and channels[i] > -1 and channels[i] < 36 and tags[i]:
             positions = D.get(channels[i] + (chips[i] % 3) * 36)
             x_position = 1 + positions[0]
             y_position = 18 - positions[1] - 6 * ((chips[i]) // 3)
             x_positions.append(x_position)
             y_positions.append(y_position)
         else:
-            pass
+            x_positions.append(-1)
+            y_positions.append(-1)
 
     return x_positions, y_positions
 
@@ -113,7 +114,8 @@ def getECALPosition(layers, chips, channels, tags):
                     x1_positions.append(-1)
                     x2_positions.append(-1)
         else:
-            pass
+            x1_positions.append(-1)
+            x2_positions.append(-1)
     return x1_positions, x2_positions
 
 

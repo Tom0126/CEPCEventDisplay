@@ -114,8 +114,8 @@ class Window:
         self.fram_deposit2 = tk.Frame(self.root, height=250, width=300)
         self.fram_deposit2.place(x=1050, y=200, anchor='ne')
 
-        self.fram_deposit3 = tk.Frame(self.root, height=250, width=300)
-        self.fram_deposit3.place(x=1050, y=450, anchor='ne')
+        self.fram_deposit3 = tk.Frame(self.root, height=251, width=300)
+        self.fram_deposit3.place(x=1050, y=449, anchor='ne')
 
         # Logo
         self.logo_file = tk.PhotoImage(file='./images.png')
@@ -235,17 +235,17 @@ class Window:
             self.particle_information = ('@' + self.p_energy + 'GeV')
 
         # main projection
-        self.plotHit(figsize=(6, 5), dpi=70, pj1=30, pj2=-40, x=300, y=255, x_ticks=self._x_ticks2,
+        self.plotHit(figsize=(6, 5), dpi=135, pj1=30, pj2=-40, x=300, y=255, x_ticks=self._x_ticks2,
                      y_ticks=self.y_ticks, z_ticks=self._z_ticks2, frame=self.fram_deposit,
                      xlabel_size=10, ylabel_size=10, zlabel_size=10,
                      logo=True, waterprint=True, x_label=True, y_label=True, z_label=True)
         # xy projection
-        self.plotHit(figsize=(3, 2), dpi=130, pj1=0, pj2=-90, x=125, y=125, x_ticks=[''], y_ticks=[],
+        self.plotHit(figsize=(3, 2), dpi=165, pj1=0, pj2=-90, x=125, y=125, x_ticks=[''], y_ticks=[],
                      xlabel_size=5, ylabel_size=5, zlabel_size=5, projection='XY Projection',
                      z_ticks=[], tick_size=5, frame=self.fram_deposit2, z_label=False, padding=False
                      )
         # yz projection
-        self.plotHit(figsize=(3, 2), dpi=120, pj1=10, pj2=6, x=120, y=125, x_ticks=[], y_ticks=(['YZ Plane']),
+        self.plotHit(figsize=(3, 2), dpi=180, pj1=10, pj2=6, x=120, y=125, x_ticks=[], y_ticks=(['YZ Plane']),
                      xlabel_size=5, ylabel_size=5, zlabel_size=5, projection='YZ Projection',
                      z_ticks=[], tick_size=5, frame=self.fram_deposit3, y_label=False, z_label=False)
 
@@ -272,15 +272,15 @@ class Window:
         # self.var_datatime.set(self.file_created_time)
 
         # ECAL cellIDs
-        self.cellIDs = readRootFileCellIDs(self.file_to_display,ahcal=False,calib=False)
+        self.cellIDs = readRootFileCellIDs(self.file_to_display)
         # ECAL times
-        self.times = readRootFileTimes(self.file_to_display,ahcal=False)
+        self.times = readRootFileTimes(self.file_to_display)
         # ECAL hitTags
-        self.tags=readRootFileHitTags(self.file_to_display,ahcal=False)
+        self.tags=readRootFileHitTags(self.file_to_display)
         # layers,chips, memo_ids, channels shape (num(events), x)
-        self.layers, self.chips, self.memo_ids, self.channels = decodeCellIDs(self.cellIDs,ahcal=False)
+        self.layers, self.chips, self.memo_ids, self.channels = decodeCellIDs(self.cellIDs)
         # ECAL triggerIDs
-        self.triggerIDs = getTriggerID(self.file_to_display,ahcal=False,calib=False)
+        self.triggerIDs = getTriggerID(self.file_to_display)
         self.picked_triggerIDs = pickTriggerIDEntry(self.triggerIDs)
         self.number = 0
         self.total_numbers = len(self.picked_triggerIDs)
@@ -292,15 +292,15 @@ class Window:
         self.var_current_triggerID.set(self.triggerID)
 
         # AHCAL cellIDs
-        self.cellIDs2 = readRootFileCellIDs(self.file_to_display2, ahcal=True,calib=False)
+        self.cellIDs2 = readRootFileCellIDs(self.file_to_display2)
         # ECAL times
-        self.times2 = readRootFileTimes(self.file_to_display2, ahcal=True)
+        self.times2 = readRootFileTimes(self.file_to_display2)
         # AHCAL hitTags
-        # self.tags2 = readRootFileHitTags(self.file_to_display2, ahcal=True)
+        self.tags2 = readRootFileHitTags(self.file_to_display2)
         # AHCAL layers,chips, memo_ids, channels shape (num(events), x)
-        self.layers2, self.chips2, self.memo_ids2, self.channels2 = decodeCellIDs(self.cellIDs2, ahcal=True)
+        self.layers2, self.chips2, self.memo_ids2, self.channels2 = decodeCellIDs(self.cellIDs2,)
         # AHCAL triggerIDs
-        self.triggerIDs2 = getTriggerID(self.file_to_display2, ahcal=True,calib=False)
+        self.triggerIDs2 = getTriggerID(self.file_to_display2)
         self.picked_triggerIDs2 = pickTriggerIDEntry(self.triggerIDs2)
         self.number2 = 0
         self.total_numbers2 = len(self.picked_triggerIDs2)
@@ -340,17 +340,17 @@ class Window:
 
             # TODO for test
             # main projection
-            self.plotHit(figsize=(6, 5), dpi=70, pj1=30, pj2=-40, x=300, y=255, x_ticks=self._x_ticks2,
+            self.plotHit(figsize=(6, 5), dpi=135, pj1=30, pj2=-40, x=300, y=255, x_ticks=self._x_ticks2,
                          y_ticks=self.y_ticks, z_ticks=self._z_ticks2, frame=self.fram_deposit,
                          xlabel_size=10, ylabel_size=10, zlabel_size=10,
                          logo=True, waterprint=True, x_label=True, y_label=True, z_label=True)
             # xy projection
-            self.plotHit(figsize=(3, 2), dpi=130, pj1=0, pj2=-90, x=125, y=125, x_ticks=[''], y_ticks=[],
+            self.plotHit(figsize=(3, 2), dpi=165, pj1=0, pj2=-90, x=125, y=125, x_ticks=[''], y_ticks=[],
                          xlabel_size=5, ylabel_size=5, zlabel_size=5, projection='XY Projection',
                          z_ticks=[], tick_size=5, frame=self.fram_deposit2, z_label=False, padding=False
                          )
             # yz projection
-            self.plotHit(figsize=(3, 2), dpi=120, pj1=10, pj2=6, x=120, y=125, x_ticks=[], y_ticks=(['YZ Plane']),
+            self.plotHit(figsize=(3, 2), dpi=180, pj1=10, pj2=6, x=120, y=125, x_ticks=[], y_ticks=(['YZ Plane']),
                          xlabel_size=5, ylabel_size=5, zlabel_size=5, projection='YZ Projection',
                          z_ticks=[], tick_size=5, frame=self.fram_deposit3, y_label=False, z_label=False)
             # # tk.Label(self.fram_deposit2,text='XY Projection').place(x=0,y=0)
@@ -389,17 +389,17 @@ class Window:
                 return
         # if (not ahcal and self.number > 0) or (ahcal and self.number2 < 0):
         # main projection
-        self.plotHit(figsize=(6, 5), dpi=70, pj1=30, pj2=-40, x=300, y=255, x_ticks=self._x_ticks2,
+        self.plotHit(figsize=(6, 5), dpi=135, pj1=30, pj2=-40, x=300, y=255, x_ticks=self._x_ticks2,
                      y_ticks=self.y_ticks, z_ticks=self._z_ticks2, frame=self.fram_deposit,
                      xlabel_size=10, ylabel_size=10, zlabel_size=10,
                      logo=True, waterprint=True, x_label=True, y_label=True, z_label=True)
         # xy projection
-        self.plotHit(figsize=(3, 2), dpi=130, pj1=0, pj2=-90, x=125, y=125, x_ticks=[''], y_ticks=[],
+        self.plotHit(figsize=(3, 2), dpi=165, pj1=0, pj2=-90, x=125, y=125, x_ticks=[''], y_ticks=[],
                      xlabel_size=5, ylabel_size=5, zlabel_size=5, projection='XY Projection',
                      z_ticks=[], tick_size=5, frame=self.fram_deposit2, z_label=False, padding=False
                      )
         # yz projection
-        self.plotHit(figsize=(3, 2), dpi=120, pj1=10, pj2=6, x=120, y=125, x_ticks=[], y_ticks=(['YZ Plane']),
+        self.plotHit(figsize=(3, 2), dpi=180, pj1=10, pj2=6, x=120, y=125, x_ticks=[], y_ticks=(['YZ Plane']),
                      xlabel_size=5, ylabel_size=5, zlabel_size=5, projection='YZ Projection',
                      z_ticks=[], tick_size=5, frame=self.fram_deposit3, y_label=False, z_label=False)
 
@@ -427,17 +427,17 @@ class Window:
                 return
 
         # main projection
-        self.plotHit(figsize=(6, 5), dpi=70, pj1=30, pj2=-40, x=300, y=255, x_ticks=self._x_ticks2,
+        self.plotHit(figsize=(6, 5), dpi=135, pj1=30, pj2=-40, x=300, y=255, x_ticks=self._x_ticks2,
                      y_ticks=self.y_ticks, z_ticks=self._z_ticks2, frame=self.fram_deposit,
                      xlabel_size=10, ylabel_size=10, zlabel_size=10,
                      logo=True, waterprint=True, x_label=True, y_label=True, z_label=True)
         # xy projection
-        self.plotHit(figsize=(3, 2), dpi=130, pj1=0, pj2=-90, x=125, y=125, x_ticks=[''], y_ticks=[],
+        self.plotHit(figsize=(3, 2), dpi=165, pj1=0, pj2=-90, x=125, y=125, x_ticks=[''], y_ticks=[],
                      xlabel_size=5, ylabel_size=5, zlabel_size=5, projection='XY Projection',
                      z_ticks=[], tick_size=5, frame=self.fram_deposit2, z_label=False, padding=False
                      )
         # yz projection
-        self.plotHit(figsize=(3, 2), dpi=120, pj1=10, pj2=6, x=120, y=125, x_ticks=[], y_ticks=(['YZ Plane']),
+        self.plotHit(figsize=(3, 2), dpi=180, pj1=10, pj2=6, x=120, y=125, x_ticks=[], y_ticks=(['YZ Plane']),
                      xlabel_size=5, ylabel_size=5, zlabel_size=5, projection='YZ Projection',
                      z_ticks=[], tick_size=5, frame=self.fram_deposit3, y_label=False, z_label=False)
 
@@ -526,14 +526,16 @@ class Window:
         x_positions, y_positions = getECALPosition(self.layers[self.entry],self.chips[self.entry],
                                                    self.channels[self.entry],self.tags[self.entry])
 
-        for i in range(len(self.layers[self.entry])):
+        for i in range(len(x_positions)):
             # plot hit
             layer_index=self.layers[self.entry][i]
             x_index = x_positions[i]
             z_index = y_positions[i]
             if x_index<0 or z_index<0 :
                 continue
+
             if layer_index%2==0:
+
                 x2 = np.arange(x_index*self.x1_interval+self.ECAL_x_trans, (x_index+2)*self.x1_interval+self.ECAL_x_trans, self.x1_interval)
                 z2 = np.arange(z_index*self.x2_interval+self.ECAL_z_trans, (z_index+2)*self.x2_interval+self.ECAL_z_trans, self.x2_interval)
                 x2, z2 = np.meshgrid(x2, z2)
@@ -544,6 +546,7 @@ class Window:
                                                , (1 - self.times[self.entry][i] / max_times) ** 2
                                                , 1))
             else:
+
                 x2 = np.arange(x_index * self.x2_interval+self.ECAL_x_trans, (x_index + 2) * self.x2_interval+self.ECAL_x_trans, self.x2_interval)
                 z2 = np.arange(z_index * self.x1_interval+self.ECAL_z_trans, (z_index + 2) * self.x1_interval+self.ECAL_z_trans, self.x1_interval)
                 x2, z2 = np.meshgrid(x2, z2)
@@ -598,21 +601,25 @@ class Window:
         assert len(self.layers2[self.entry2]) == len(self.channels2[self.entry2])
         assert len(self.layers2[self.entry2]) == len(self.times2[self.entry2])
 
-        x_positions2, y_positions2 = getPosition(self.chips2[self.entry2], self.channels2[self.entry2])
-        for i in range(len(self.layers2[self.entry2])):
+        x_positions2, y_positions2 = getAHCALPosition(self.chips2[self.entry2], self.channels2[self.entry2],self.tags2[self.entry2])
+
+        for i in range(len(x_positions2)):
             # plot hit
+
             x_index2 = x_positions2[i]
             z_index2 = y_positions2[i]
-            x2_AHCAL = np.arange(x_index2+self.AHCAL_x_trans, x_index2+self.AHCAL_x_trans + 2)*self.AHCAL_scale_factor
-            z2_AHCAL = np.arange(z_index2+self.AHCAL_z_trans, z_index2+self.AHCAL_z_trans+ 2)*self.AHCAL_scale_factor
-            x2_AHCAL, z2_AHCAL = np.meshgrid(x2_AHCAL, z2_AHCAL)
-            y2_AHCAL = np.ones(x2_AHCAL.shape) * (1 + self.layers2[self.entry2][i])*30.1+self.AHCAL_y_trans
 
-            surf2 = ax.plot_surface(x2_AHCAL, y2_AHCAL, z2_AHCAL, alpha=0.8, linewidth=0.1,
-                                    antialiased=False, rstride=1, cstride=1,
-                                    color=((1 - self.times2[self.entry2][i] / max_times) ** 2
-                                           , (1 - self.times2[self.entry2][i] / max_times) ** 2
-                                           , 1))
+            if x_index2>-1 and z_index2>-1:
+                x2_AHCAL = np.arange(x_index2+self.AHCAL_x_trans, x_index2+self.AHCAL_x_trans + 2)*self.AHCAL_scale_factor
+                z2_AHCAL = np.arange(z_index2+self.AHCAL_z_trans, z_index2+self.AHCAL_z_trans+ 2)*self.AHCAL_scale_factor
+                x2_AHCAL, z2_AHCAL = np.meshgrid(x2_AHCAL, z2_AHCAL)
+                y2_AHCAL = np.ones(x2_AHCAL.shape) * (1 + self.layers2[self.entry2][i])*30.1+self.AHCAL_y_trans
+
+                surf2 = ax.plot_surface(x2_AHCAL, y2_AHCAL, z2_AHCAL, alpha=0.8, linewidth=0.1,
+                                        antialiased=False, rstride=1, cstride=1,
+                                        color=((1 - self.times2[self.entry2][i] / max_times) ** 2
+                                               , (1 - self.times2[self.entry2][i] / max_times) ** 2
+                                               , 1))
 
 
         # print mark
