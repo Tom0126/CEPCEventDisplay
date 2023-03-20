@@ -80,8 +80,8 @@ class Window:
         self.fram_deposit2 = tk.Frame(self.root, height=250, width=300)
         self.fram_deposit2.place(x=1050, y=200, anchor='ne')
 
-        self.fram_deposit3 = tk.Frame(self.root, height=250, width=300)
-        self.fram_deposit3.place(x=1050, y=450, anchor='ne')
+        self.fram_deposit3 = tk.Frame(self.root, height=251, width=300)
+        self.fram_deposit3.place(x=1050, y=449, anchor='ne')
 
         # Logo
         self.logo_file = tk.PhotoImage(file='./images.png')
@@ -179,25 +179,25 @@ class Window:
 
         # main projection
         # main plot pj1=30, pj2=-40
-        self.plotHit(figsize=(6, 5), dpi=70, pj1=30, pj2=-40, x=300, y=255, x_ticks=self.x_ticks,
+        self.plotHit(figsize=(6, 5), dpi=135, pj1=30, pj2=-40, x=300, y=255, x_ticks=self.x_ticks,
                      y_ticks=self.y_ticks, z_ticks=self.z_ticks, frame=self.fram_deposit,
                      xlabel_size=10, ylabel_size=10, zlabel_size=10,
                      logo=True, waterprint=True, x_label=True, y_label=True, z_label=True)
         # xy projection
-        self.plotHit(figsize=(3, 2), dpi=130, pj1=0, pj2=-90, x=125, y=125, x_ticks=[''], y_ticks=[],
+        self.plotHit(figsize=(3, 2), dpi=165, pj1=0, pj2=-90, x=125, y=125, x_ticks=[''], y_ticks=[],
                      xlabel_size=5, ylabel_size=5, zlabel_size=5, projection='XY Projection',
                      z_ticks=[], tick_size=5, frame=self.fram_deposit2, z_label=False, padding=False
                      )
         # yz projection
-        self.plotHit(figsize=(3, 2), dpi=120, pj1=10, pj2=6, x=120, y=125, x_ticks=[], y_ticks=(['YZ Plane']),
+        self.plotHit(figsize=(3, 2), dpi=180, pj1=10, pj2=6, x=120, y=125, x_ticks=[], y_ticks=(['YZ Plane']),
                      xlabel_size=5, ylabel_size=5, zlabel_size=5, projection='YZ Projection',
                      z_ticks=[], tick_size=5, frame=self.fram_deposit3, y_label=False, z_label=False)
+        # tk.Label(self.fram_deposit2,text='XY Projection').place(x=0,y=0)
 
     def loadData(self):
-        try:
-            self.file_to_display = getLatestRootFile(self.dir)
-        except:
-            self.loadData()
+
+        self.file_to_display = self.dir_entry.get()
+
 
         try:
             self.file_created_time = self.file_to_display[-6:-21:-1][::-1]
@@ -211,15 +211,15 @@ class Window:
         # self.var_datatime.set(self.file_created_time)
 
         # cellIDs
-        self.cellIDs = readRootFileCellIDs(self.file_to_display,ahcal=False)
+        self.cellIDs = readRootFileCellIDs(self.file_to_display)
         # times
-        self.times = readRootFileTimes(self.file_to_display,ahcal=False)
+        self.times = readRootFileTimes(self.file_to_display)
         # hitTags
-        self.tags=readRootFileHitTags(self.file_to_display,ahcal=False)
+        self.tags=readRootFileHitTags(self.file_to_display)
         # layers,chips, memo_ids, channels shape (num(events), x)
-        self.layers, self.chips, self.memo_ids, self.channels = decodeCellIDs(self.cellIDs,ahcal=False)
+        self.layers, self.chips, self.memo_ids, self.channels = decodeCellIDs(self.cellIDs)
         # triggerIDs
-        self.triggerIDs = getTriggerID(self.file_to_display,ahcal=False)
+        self.triggerIDs = getTriggerID(self.file_to_display)
         self.picked_triggerIDs = pickTriggerIDEntry(self.triggerIDs)
         self.number = 0
         self.total_numbers = len(self.picked_triggerIDs)
@@ -254,17 +254,17 @@ class Window:
 
             # TODO for test
             # main projection
-            self.plotHit(figsize=(6, 5), dpi=70, pj1=30, pj2=-40, x=300, y=255, x_ticks=self.x_ticks,
+            self.plotHit(figsize=(6, 5), dpi=135, pj1=30, pj2=-40, x=300, y=255, x_ticks=self.x_ticks,
                          y_ticks=self.y_ticks, z_ticks=self.z_ticks, frame=self.fram_deposit,
                          xlabel_size=10, ylabel_size=10, zlabel_size=10,
                          logo=True, waterprint=True, x_label=True, y_label=True, z_label=True)
             # xy projection
-            self.plotHit(figsize=(3, 2), dpi=130, pj1=0, pj2=-90, x=125, y=125, x_ticks=[''], y_ticks=[],
+            self.plotHit(figsize=(3, 2), dpi=165, pj1=0, pj2=-90, x=125, y=125, x_ticks=[''], y_ticks=[],
                          xlabel_size=5, ylabel_size=5, zlabel_size=5, projection='XY Projection',
                          z_ticks=[], tick_size=5, frame=self.fram_deposit2, z_label=False, padding=False
                          )
             # yz projection
-            self.plotHit(figsize=(3, 2), dpi=120, pj1=10, pj2=6, x=120, y=125, x_ticks=[], y_ticks=(['YZ Plane']),
+            self.plotHit(figsize=(3, 2), dpi=180, pj1=10, pj2=6, x=120, y=125, x_ticks=[], y_ticks=(['YZ Plane']),
                          xlabel_size=5, ylabel_size=5, zlabel_size=5, projection='YZ Projection',
                          z_ticks=[], tick_size=5, frame=self.fram_deposit3, y_label=False, z_label=False)
             # tk.Label(self.fram_deposit2,text='XY Projection').place(x=0,y=0)
@@ -291,19 +291,20 @@ class Window:
 
             self.var_index_total.set(str(self.number + 1) + '/' + str(self.total_numbers))
             # main projection
-            self.plotHit(figsize=(6, 5), dpi=70, pj1=30, pj2=-40, x=300, y=255, x_ticks=self.x_ticks,
+            self.plotHit(figsize=(6, 5), dpi=135, pj1=30, pj2=-40, x=300, y=255, x_ticks=self.x_ticks,
                          y_ticks=self.y_ticks, z_ticks=self.z_ticks, frame=self.fram_deposit,
                          xlabel_size=10, ylabel_size=10, zlabel_size=10,
                          logo=True, waterprint=True, x_label=True, y_label=True, z_label=True)
             # xy projection
-            self.plotHit(figsize=(3, 2), dpi=130, pj1=0, pj2=-90, x=125, y=125, x_ticks=[''], y_ticks=[],
+            self.plotHit(figsize=(3, 2), dpi=165, pj1=0, pj2=-90, x=125, y=125, x_ticks=[''], y_ticks=[],
                          xlabel_size=5, ylabel_size=5, zlabel_size=5, projection='XY Projection',
                          z_ticks=[], tick_size=5, frame=self.fram_deposit2, z_label=False, padding=False
                          )
             # yz projection
-            self.plotHit(figsize=(3, 2), dpi=120, pj1=10, pj2=6, x=120, y=125, x_ticks=[], y_ticks=(['YZ Plane']),
+            self.plotHit(figsize=(3, 2), dpi=180, pj1=10, pj2=6, x=120, y=125, x_ticks=[], y_ticks=(['YZ Plane']),
                          xlabel_size=5, ylabel_size=5, zlabel_size=5, projection='YZ Projection',
                          z_ticks=[], tick_size=5, frame=self.fram_deposit3, y_label=False, z_label=False)
+            # tk.Label(self.fram_deposit2,text='XY Projection').place(x=0,y=0)
         else:
             pass
 
@@ -315,19 +316,20 @@ class Window:
             self.var_current_triggerID.set(self.triggerID)
             self.var_index_total.set(str(self.number + 1) + '/' + str(self.total_numbers))
             # main projection
-            self.plotHit(figsize=(6, 5), dpi=70, pj1=30, pj2=-40, x=300, y=255, x_ticks=self.x_ticks,
+            self.plotHit(figsize=(6, 5), dpi=135, pj1=30, pj2=-40, x=300, y=255, x_ticks=self.x_ticks,
                          y_ticks=self.y_ticks, z_ticks=self.z_ticks, frame=self.fram_deposit,
                          xlabel_size=10, ylabel_size=10, zlabel_size=10,
                          logo=True, waterprint=True, x_label=True, y_label=True, z_label=True)
             # xy projection
-            self.plotHit(figsize=(3, 2), dpi=130, pj1=0, pj2=-90, x=125, y=125, x_ticks=[''], y_ticks=[],
+            self.plotHit(figsize=(3, 2), dpi=165, pj1=0, pj2=-90, x=125, y=125, x_ticks=[''], y_ticks=[],
                          xlabel_size=5, ylabel_size=5, zlabel_size=5, projection='XY Projection',
                          z_ticks=[], tick_size=5, frame=self.fram_deposit2, z_label=False, padding=False
                          )
             # yz projection
-            self.plotHit(figsize=(3, 2), dpi=120, pj1=10, pj2=6, x=120, y=125, x_ticks=[], y_ticks=(['YZ Plane']),
+            self.plotHit(figsize=(3, 2), dpi=180, pj1=10, pj2=6, x=120, y=125, x_ticks=[], y_ticks=(['YZ Plane']),
                          xlabel_size=5, ylabel_size=5, zlabel_size=5, projection='YZ Projection',
                          z_ticks=[], tick_size=5, frame=self.fram_deposit3, y_label=False, z_label=False)
+            # tk.Label(self.fram_deposit2,text='XY Projection').place(x=0,y=0)
         else:
             pass
 
@@ -374,7 +376,8 @@ class Window:
         for i in range(len(self.layers[self.entry])):
             # plot hit
             layer_index=self.layers[self.entry][i]
-            print(layer_index)
+
+
             x_index = x_positions[i]
             z_index = y_positions[i]
             if x_index<0 or z_index<0 :
