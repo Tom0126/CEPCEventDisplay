@@ -1,10 +1,3 @@
-decode position on the updated position-cellids relation
-
-calibrated data
-
-only valid triggerID
-
-cg ids_positions!! previous is wrong
-
-with larger subplot
-!not use 0818
+To Run in Cluster
+  python Display.py
+You should provide ECAL&AHCAL file path, the entry you want to show, and a directory to save the picture.
