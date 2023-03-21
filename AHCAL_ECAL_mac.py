@@ -459,7 +459,7 @@ class Window:
         2. y_ticks = z axis '''
 
         fig = plt.figure(figsize=figsize, dpi=dpi)
-        ax = fig.gca(projection='3d')
+        ax = fig.add_subplot(projection='3d')
         plt.gca().set_box_aspect((1, 2, 1))
         # max times: uesd for color display
         max_times1 = np.max(self.times[self.entry])
