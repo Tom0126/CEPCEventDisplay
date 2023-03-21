@@ -112,7 +112,7 @@ class Window:
         hf_zx, hf_zy = np.meshgrid(lh1, lh2)
         frame_unit = np.ones(hf_xy.shape)
 
-    def plotHit(self,entry,save_dir,):
+    def plotHit(self,ecal_entry,ahcal_entry,save_dir,):
         '''
         1. x_ticks, y_ticks, z_tick related to the ax.set_{}ticks, not about the axis in fig.
         2. y_ticks = z axis '''
@@ -121,13 +121,14 @@ class Window:
         plt.gca().set_box_aspect((1, 2, 1))
 
         # max times: uesd for color display
-        max_times1 = np.amax(self.times[entry])
-        max_times2 = np.amax(self.times2[entry])
+        max_times1 = np.amax(self.times[ecal_entry])
+        max_times2 = np.amax(self.times2[ahcal_entry])
         max_times=max(max_times1,max_times2)
         alpha_frame=0.1
 
         ecal_padding=50
 
+        # ECAL
         le1=np.array([self.ECAL_x_trans-ecal_padding,self.x1_interval * 42+self.ECAL_x_trans+ecal_padding]) # x,z axis
         le2=np.array([1+self.ECAL_y_trans-ecal_padding,310.7+ self.ECAL_y_trans]) # y-axis
         ef_xy,ef_xz=np.meshgrid(le2,le1) # ECAL Face
@@ -157,18 +158,18 @@ class Window:
                                    antialiased=False, rstride=1,
                                    cstride=1,
                                    color='0.8')
-        assert len(self.layers[entry]) == len(self.chips[entry])
-        assert len(self.layers[entry]) == len(self.channels[entry])
-        assert len(self.layers[entry]) == len(self.times[entry])
+        assert len(self.layers[ecal_entry]) == len(self.chips[ecal_entry])
+        assert len(self.layers[ecal_entry]) == len(self.channels[ecal_entry])
+        assert len(self.layers[ecal_entry]) == len(self.times[ecal_entry])
 
 
         # get positions
-        x_positions, y_positions = getECALPosition(self.layers[entry],self.chips[entry],
-                                                   self.channels[entry],self.tags[entry])
+        x_positions, y_positions = getECALPosition(self.layers[ecal_entry],self.chips[ecal_entry],
+                                                   self.channels[ecal_entry],self.tags[ecal_entry])
 
         for i in range(len(x_positions)):
             # plot hit
-            layer_index=self.layers[entry][i]
+            layer_index=self.layers[ecal_entry][i]
             x_index = x_positions[i]
             z_index = y_positions[i]
             if x_index<0 or z_index<0 :
@@ -182,8 +183,8 @@ class Window:
                 y2 = np.ones((2,2)) * (1+layer_index//2*19.9+self.ECAL_y_trans)
                 surf2 = ax.plot_surface(x2, y2, z2, alpha=0.8, linewidth=0.1,
                                         antialiased=False, rstride=1, cstride=1,
-                                        color=((1 - self.times[entry][i] / max_times) ** 2
-                                               , (1 - self.times[entry][i] / max_times) ** 2
+                                        color=((1 - self.times[ecal_entry][i] / max_times) ** 2
+                                               , (1 - self.times[ecal_entry][i] / max_times) ** 2
                                                , 1))
             else:
 
@@ -193,8 +194,8 @@ class Window:
                 y2 = np.ones((2,2)) * (12.2+(layer_index-1)//2*19.9+self.ECAL_y_trans)
                 surf2 = ax.plot_surface(x2, y2, z2, alpha=0.8, linewidth=0.1,
                                         antialiased=False, rstride=1, cstride=1,
-                                        color=((1 - self.times[entry][i] / max_times) ** 2
-                                               , (1 - self.times[entry][i] / max_times) ** 2
+                                        color=((1 - self.times[ecal_entry][i] / max_times) ** 2
+                                               , (1 - self.times[ecal_entry][i] / max_times) ** 2
                                                , 1))
 
         # AHCAL Part
@@ -232,11 +233,11 @@ class Window:
                                    antialiased=False, rstride=1,
                                    cstride=1,
                                    color='0.8')
-        assert len(self.layers2[entry]) == len(self.chips2[entry])
-        assert len(self.layers2[entry]) == len(self.channels2[entry])
-        assert len(self.layers2[entry]) == len(self.times2[entry])
+        assert len(self.layers2[ahcal_entry]) == len(self.chips2[ahcal_entry])
+        assert len(self.layers2[ahcal_entry]) == len(self.channels2[ahcal_entry])
+        assert len(self.layers2[ahcal_entry]) == len(self.times2[ahcal_entry])
 
-        x_positions2, y_positions2 = getAHCALPosition(self.chips2[entry], self.channels2[entry],self.tags2[entry])
+        x_positions2, y_positions2 = getAHCALPosition(self.chips2[ahcal_entry], self.channels2[ahcal_entry],self.tags2[ahcal_entry])
 
         for i in range(len(x_positions2)):
             # plot hit
@@ -248,12 +249,12 @@ class Window:
                 x2_AHCAL = np.arange(x_index2+self.AHCAL_x_trans, x_index2+self.AHCAL_x_trans + 2)*self.AHCAL_scale_factor
                 z2_AHCAL = np.arange(z_index2+self.AHCAL_z_trans, z_index2+self.AHCAL_z_trans+ 2)*self.AHCAL_scale_factor
                 x2_AHCAL, z2_AHCAL = np.meshgrid(x2_AHCAL, z2_AHCAL)
-                y2_AHCAL = np.ones(x2_AHCAL.shape) * (1 + self.layers2[entry][i])*30.1+self.AHCAL_y_trans
+                y2_AHCAL = np.ones(x2_AHCAL.shape) * (1 + self.layers2[ahcal_entry][i])*30.1+self.AHCAL_y_trans
 
                 surf2 = ax.plot_surface(x2_AHCAL, y2_AHCAL, z2_AHCAL, alpha=0.8, linewidth=0.1,
                                         antialiased=False, rstride=1, cstride=1,
-                                        color=((1 - self.times2[entry][i] / max_times) ** 2
-                                               , (1 - self.times2[entry][i] / max_times) ** 2
+                                        color=((1 - self.times2[ahcal_entry][i] / max_times) ** 2
+                                               , (1 - self.times2[ahcal_entry][i] / max_times) ** 2
                                                , 1))
 
 
@@ -291,17 +292,20 @@ class Window:
 
         plt.gca().set_position((0, 0, 1, 1))
 
-        save_path=os.path.join(save_dir,'{}.png'.format(entry))
+        save_path=os.path.join(save_dir,'{}_{}.png'.format(ecal_entry,ahcal_entry))
         plt.savefig(save_path)
 
 if __name__ == '__main__':
 
     ecal_path='Result/e.root'
     ahcal_path='Result/a.root'
-    entry=0
+    ecal_entry=0
+    ahcal_entry=0
     save_dir='Result' #directory
 
     display=Window(ecal_path=ecal_path,ahcal_path=ahcal_path)
-    display.plotHit(entry=entry,save_dir=save_dir)
+    display.plotHit(ecal_entry=ecal_entry,ahcal_entry=ahcal_entry,save_dir=save_dir)
+    display.plotHit(ecal_entry=5, ahcal_entry=6,save_dir=save_dir)
+
 
     pass
