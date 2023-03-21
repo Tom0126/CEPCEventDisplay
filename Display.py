@@ -116,10 +116,10 @@ class Window:
         '''
         1. x_ticks, y_ticks, z_tick related to the ax.set_{}ticks, not about the axis in fig.
         2. y_ticks = z axis '''
-
-        fig = plt.figure(figsize=(6,5))
-        ax = fig.gca(projection='3d')
+        fig = plt.figure(figsize=(6, 5))
+        ax = fig.add_subplot(projection='3d')
         plt.gca().set_box_aspect((1, 2, 1))
+
         # max times: uesd for color display
         max_times1 = np.amax(self.times[entry])
         max_times2 = np.amax(self.times2[entry])
@@ -296,10 +296,10 @@ class Window:
 
 if __name__ == '__main__':
 
-    ecal_path=''
-    ahcal_path=''
+    ecal_path='Result/e.root'
+    ahcal_path='Result/a.root'
     entry=0
-    save_dir='' #directory
+    save_dir='Result' #directory
 
     display=Window(ecal_path=ecal_path,ahcal_path=ahcal_path)
     display.plotHit(entry=entry,save_dir=save_dir)
