@@ -1,0 +1,3 @@
+To Run in Cluster
+  python Display.py
+You should provide ECAL&AHCAL file path, the entry you want to show, and a directory to save the picture.
