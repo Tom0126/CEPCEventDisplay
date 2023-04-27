@@ -1,0 +1,6 @@
+*.root*
+*.idea*
+*test.py*
+*__pycache__*
+Result/*
+
