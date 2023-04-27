@@ -15,8 +15,6 @@ import time
 
 #########  parameter  ##########
 
-file_to_dispaly = '../Result/HCAL_cosmic.root'
-
 
 # fig_name_to_save = 'test.png'
 # layers_num = 40  # total sampling layers
@@ -156,12 +154,12 @@ class Window:
 
         # triggerID
         self.var_current_triggerID = tk.IntVar()
-        tk.Label(self.fram_panel, text='ECAL TriggerID', font=('Arial', 11), width=12, height=1).place(x=175, y=90,
+        tk.Label(self.fram_panel, text='ECAL Event_Num', font=('Arial', 11), width=12, height=1).place(x=175, y=90,
                                                                                          anchor='n')
         tk.Label(self.fram_panel, textvariable=self.var_current_triggerID, bg='yellow'
                  , font=('Arial', 15), width=10, height=1).place(x=175, y=110, anchor='n')
         self.var_current_triggerID2 = tk.IntVar()
-        tk.Label(self.fram_panel, text='AHCAL TriggerID', font=('Arial', 11), width=12, height=1).place(x=175+trans, y=90,
+        tk.Label(self.fram_panel, text='AHCAL Event_Num', font=('Arial', 11), width=12, height=1).place(x=175+trans, y=90,
                                                                                                   anchor='n')
         tk.Label(self.fram_panel, textvariable=self.var_current_triggerID2, bg='yellow'
                  , font=('Arial', 15), width=10, height=1).place(x=175+trans, y=110, anchor='n')
@@ -275,8 +273,7 @@ class Window:
         self.cellIDs = readRootFileCellIDs(self.file_to_display)
         # ECAL times
         self.times = readRootFileTimes(self.file_to_display)
-        # ECAL hitTags
-        self.tags=readRootFileHitTags(self.file_to_display)
+
         # layers,chips, memo_ids, channels shape (num(events), x)
         self.layers, self.chips, self.memo_ids, self.channels = decodeCellIDs(self.cellIDs)
         # ECAL triggerIDs
@@ -295,8 +292,7 @@ class Window:
         self.cellIDs2 = readRootFileCellIDs(self.file_to_display2)
         # ECAL times
         self.times2 = readRootFileTimes(self.file_to_display2)
-        # AHCAL hitTags
-        self.tags2 = readRootFileHitTags(self.file_to_display2)
+
         # AHCAL layers,chips, memo_ids, channels shape (num(events), x)
         self.layers2, self.chips2, self.memo_ids2, self.channels2 = decodeCellIDs(self.cellIDs2,)
         # AHCAL triggerIDs
@@ -524,7 +520,7 @@ class Window:
 
         # get positions
         x_positions, y_positions = getECALPosition(self.layers[self.entry],self.chips[self.entry],
-                                                   self.channels[self.entry],self.tags[self.entry])
+                                                   self.channels[self.entry])
 
         for i in range(len(x_positions)):
             # plot hit
@@ -601,7 +597,7 @@ class Window:
         assert len(self.layers2[self.entry2]) == len(self.channels2[self.entry2])
         assert len(self.layers2[self.entry2]) == len(self.times2[self.entry2])
 
-        x_positions2, y_positions2 = getAHCALPosition(self.chips2[self.entry2], self.channels2[self.entry2],self.tags2[self.entry2])
+        x_positions2, y_positions2 = getAHCALPosition(self.chips2[self.entry2], self.channels2[self.entry2])
 
         for i in range(len(x_positions2)):
             # plot hit

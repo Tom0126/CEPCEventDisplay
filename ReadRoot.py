@@ -8,7 +8,7 @@ import numpy as np
 def readRootFileCellIDs(path):
     file = uproot.open(path)
 
-    event = file['Raw_Hit']
+    event = file['Calib_Hit']
 
 
     # Get data->numpy
@@ -23,12 +23,12 @@ def readRootFileTimes(path):
     file = uproot.open(path)
 
 
-    event = file['Raw_Hit']
+    event = file['Calib_Hit']
 
     # Get data->numpy
     data = event.arrays(library="np")
     # cellIDs
-    times = data['HG_Charge']
+    times = data['Hit_Energy']
     return times
 
 
@@ -48,7 +48,7 @@ def readRootFileE(path):
 def readRootFileHitTags(path):
     file = uproot.open(path)
 
-    event = file['Raw_Hit']
+    event = file['Calib_Hit']
 
     # Get data->numpy
     data = event.arrays(library="np")
@@ -80,7 +80,7 @@ def getTriggerID(path):
 
     # Get data->numpy
     data = event.arrays(library="np")
-    triggerID = data['TriggerID']
+    triggerID = data['Event_Num']
     return triggerID
 
 

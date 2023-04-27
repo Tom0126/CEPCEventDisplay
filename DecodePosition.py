@@ -14,19 +14,17 @@ def decodeCellIDs(cellIDs):
     :param cellIDs:
     :return:
     '''
-    layers = (cellIDs >> 24) & 0xFF
-    chips = (cellIDs>>16) & 0xFF
-    memo_ids = (cellIDs>>8) & 0xFF
-    channels =(cellIDs) & 0xFF
 
+    scale = 100000
+
+    layers = cellIDs // scale
+    chips = (cellIDs - scale * layers) // 10000
+    memo_ids = (cellIDs - scale * layers - 10000 * chips) // 100
+    channels = cellIDs % 100
     return layers, chips, memo_ids, channels
-#
-# def getLayer(cellIDs, calib=True):
-#     if calib:
-#         layers=cellIDs // 100000
-#         return layers #ECAL:0-31, HCAL: 40-79
 
-def getAHCALPosition(chips, channels, tags):
+
+def getAHCALPosition(chips, channels):
     '''1: chips, channels: lists
        2: start (1,18)
        3: AHCAL'''
@@ -36,7 +34,7 @@ def getAHCALPosition(chips, channels, tags):
     length = len(chips)
     assert len(channels) == len(chips)
     for i in range(length):
-        if chips[i] > -1 and chips[i] < 9 and channels[i] > -1 and channels[i] < 36 and tags[i]:
+        if chips[i] > -1 and chips[i] < 9 and channels[i] > -1 and channels[i] < 36:
             positions = D.get(channels[i] + (chips[i] % 3) * 36)
             x_position = 1 + positions[0]
             y_position = 18 - positions[1] - 6 * ((chips[i]) // 3)
@@ -49,7 +47,7 @@ def getAHCALPosition(chips, channels, tags):
     return x_positions, y_positions
 
 
-def getECALPosition(layers, chips, channels, tags):
+def getECALPosition(layers, chips, channels):
     '''1: chips, channels: lists
        2: start (1,18)
        3: ECAL'''
@@ -81,7 +79,7 @@ def getECALPosition(layers, chips, channels, tags):
     length = len(chips)
     assert len(channels) == len(chips)
     assert len(channels) == len(layers)
-    assert len(channels) == len(tags)
+
     for i in range(length):
         if chips[i]>-1 and chips[i] < 6 and channels[i]>-1 and channels[i]<36:
             scin_id = decode_ids[chips[i], channels[i]]
@@ -96,7 +94,7 @@ def getECALPosition(layers, chips, channels, tags):
                 # x2_positions.append(-x1)
                 _x1=int((2.65 + x1) / x1_interval + 20)
                 _x2=int((-x2) / x2_interval + 2)
-                if (tags[i]==1) and (_x1>-1) and (_x1<42) and (_x2>-1) and (_x2<5) and (layer_id>-1) and (layer_id<32): # remove faults
+                if (_x1>-1) and (_x1<42) and (_x2>-1) and (_x2<5) and (layer_id>-1) and (layer_id<32): # remove faults
                     x1_positions.append(_x1)  # normalize the position:0,1,2...
                     x2_positions.append(_x2)
                 else:
@@ -107,7 +105,7 @@ def getECALPosition(layers, chips, channels, tags):
                 # x2_positions.append(-x2)
                 _x1=int((x2) / x2_interval + 2)
                 _x2=int((2.65 - x1) / x1_interval + 20)
-                if (tags[i] == 1) and (_x1 > -1) and (_x1 < 5) and (_x2 > -1) and (_x2 < 42)and (layer_id>-1) and (layer_id<32):  # remove faults
+                if (_x1 > -1) and (_x1 < 5) and (_x2 > -1) and (_x2 < 42)and (layer_id>-1) and (layer_id<32):  # remove faults
                     x1_positions.append(_x1)  # normalize the position:0,1,2...
                     x2_positions.append(_x2)
                 else:
