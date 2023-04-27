@@ -79,8 +79,6 @@ class Window:
         self.cellIDs = readRootFileCellIDs(self.ecal_path)
         # ECAL times
         self.times = readRootFileTimes(self.ecal_path)
-        # ECAL hitTags
-        self.tags=readRootFileHitTags(self.ecal_path)
         # layers,chips, memo_ids, channels shape (num(events), x)
         self.layers, self.chips, self.memo_ids, self.channels = decodeCellIDs(self.cellIDs)
         # ECAL triggerIDs
@@ -93,8 +91,6 @@ class Window:
         self.cellIDs2 = readRootFileCellIDs(self.ahcal_path)
         # ECAL times
         self.times2 = readRootFileTimes(self.ahcal_path)
-        # AHCAL hitTags
-        self.tags2 = readRootFileHitTags(self.ahcal_path)
         # AHCAL layers,chips, memo_ids, channels shape (num(events), x)
         self.layers2, self.chips2, self.memo_ids2, self.channels2 = decodeCellIDs(self.cellIDs2,)
 
@@ -165,7 +161,7 @@ class Window:
 
         # get positions
         x_positions, y_positions = getECALPosition(self.layers[ecal_entry],self.chips[ecal_entry],
-                                                   self.channels[ecal_entry],self.tags[ecal_entry])
+                                                   self.channels[ecal_entry])
 
         for i in range(len(x_positions)):
             # plot hit
@@ -302,7 +298,8 @@ if __name__ == '__main__':
     ecal_entry=0
     ahcal_entry=0
     save_dir='Result' #directory
-
+    if not os.path.exists(save_dir):
+        os.mkdir(save_dir)
     display=Window(ecal_path=ecal_path,ahcal_path=ahcal_path)
     display.plotHit(ecal_entry=ecal_entry,ahcal_entry=ahcal_entry,save_dir=save_dir)
     display.plotHit(ecal_entry=5, ahcal_entry=6,save_dir=save_dir)
