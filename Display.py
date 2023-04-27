@@ -233,7 +233,7 @@ class Window:
         assert len(self.layers2[ahcal_entry]) == len(self.channels2[ahcal_entry])
         assert len(self.layers2[ahcal_entry]) == len(self.times2[ahcal_entry])
 
-        x_positions2, y_positions2 = getAHCALPosition(self.chips2[ahcal_entry], self.channels2[ahcal_entry],self.tags2[ahcal_entry])
+        x_positions2, y_positions2 = getAHCALPosition(self.chips2[ahcal_entry], self.channels2[ahcal_entry])
 
         for i in range(len(x_positions2)):
             # plot hit
@@ -293,8 +293,8 @@ class Window:
 
 if __name__ == '__main__':
 
-    ecal_path='Result/e.root'
-    ahcal_path='Result/a.root'
+    ecal_path='/home/songsy/CEPCEventDisplay/data/mnt2/ScECAL/2023/Result/calib/mu-/100GeV/ECAL_Run10_20230425_003153.root'
+    ahcal_path='/home/songsy/CEPCEventDisplay/data/mnt2/AHCAL/PublicAna/2023/BeamAna/result/mu-/100GeV/AHCAL_Run10_20230425_003339.root'
     ecal_entry=0
     ahcal_entry=0
     save_dir='Result' #directory

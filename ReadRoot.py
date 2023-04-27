@@ -76,7 +76,7 @@ def getTriggerID(path):
     '''
     file = uproot.open(path)
 
-    event = file['Raw_Hit']
+    event = file['Calib_Hit']
 
     # Get data->numpy
     data = event.arrays(library="np")
