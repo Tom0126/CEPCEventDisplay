@@ -1,6 +1,6 @@
 
 from DecodePosition import *
-
+import argparse
 from ReadRoot import *
 
 
@@ -292,17 +292,22 @@ class Window:
         plt.savefig(save_path)
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    # base setting
 
-    ecal_path='/home/songsy/CEPCEventDisplay/data/mnt2/ScECAL/2023/Result/calib/mu-/100GeV/ECAL_Run10_20230425_003153.root'
-    ahcal_path='/home/songsy/CEPCEventDisplay/data/mnt2/AHCAL/PublicAna/2023/BeamAna/result/mu-/100GeV/AHCAL_Run10_20230425_003339.root'
-    ecal_entry=0
-    ahcal_entry=0
+    parser.add_argument("--e_path", type=str, help="ecal path.")
+    parser.add_argument("--a_path", type=str, help="ahcal path.")
+    parser.add_argument("--e_en", type=int, help="ecal entry.")
+    parser.add_argument("--a_en", type=int, help="ahcal entry.")
+
+    args = parser.parse_args()
+
     save_dir='Result' #directory
     if not os.path.exists(save_dir):
         os.mkdir(save_dir)
-    display=Window(ecal_path=ecal_path,ahcal_path=ahcal_path)
-    display.plotHit(ecal_entry=ecal_entry,ahcal_entry=ahcal_entry,save_dir=save_dir)
-    display.plotHit(ecal_entry=5, ahcal_entry=6,save_dir=save_dir)
+    display=Window(ecal_path=args.e_path,ahcal_path=args.a_path)
+    display.plotHit(ecal_entry=args.e_en,ahcal_entry=args.a_en,save_dir=save_dir)
+
 
 
     pass
