@@ -275,7 +275,9 @@ class Window:
         self.times = readRootFileTimes(self.file_to_display)
 
         # layers,chips, memo_ids, channels shape (num(events), x)
-        self.layers, self.chips, self.memo_ids, self.channels = decodeCellIDs(self.cellIDs)
+        self.layers,self.chips, self.memo_ids, self.channels = decodeCellIDs(self.cellIDs)
+
+
         # ECAL triggerIDs
         self.triggerIDs = getTriggerID(self.file_to_display)
         self.picked_triggerIDs = pickTriggerIDEntry(self.triggerIDs)
@@ -294,7 +296,9 @@ class Window:
         self.times2 = readRootFileTimes(self.file_to_display2)
 
         # AHCAL layers,chips, memo_ids, channels shape (num(events), x)
-        self.layers2, self.chips2, self.memo_ids2, self.channels2 = decodeCellIDs(self.cellIDs2,)
+        self.layers2, _,_,_ = decodeCellIDs(self.cellIDs2,)
+        self.hit_x2 = getHit_X(self.file_to_display2)
+        self.hit_y2 = getHit_Y(self.file_to_display2)
         # AHCAL triggerIDs
         self.triggerIDs2 = getTriggerID(self.file_to_display2)
         self.picked_triggerIDs2 = pickTriggerIDEntry(self.triggerIDs2)
@@ -593,11 +597,11 @@ class Window:
                                    antialiased=False, rstride=1,
                                    cstride=1,
                                    color='0.8')
-        assert len(self.layers2[self.entry2]) == len(self.chips2[self.entry2])
-        assert len(self.layers2[self.entry2]) == len(self.channels2[self.entry2])
+        assert len(self.layers2[self.entry2]) == len(self.hit_x2[self.entry2])
+        assert len(self.layers2[self.entry2]) == len(self.hit_y2[self.entry2])
         assert len(self.layers2[self.entry2]) == len(self.times2[self.entry2])
 
-        x_positions2, y_positions2 = getAHCALPosition(self.chips2[self.entry2], self.channels2[self.entry2])
+        x_positions2, y_positions2 = getAHCALPosition(self.hit_x2[self.entry2], self.hit_y2[self.entry2])
 
         for i in range(len(x_positions2)):
             # plot hit
@@ -623,9 +627,9 @@ class Window:
 
             plt.title('CEPC ScW-ECAL + AHCAL Prototype', fontsize=12)
             if (self.p_type == '') and (self.p_energy == ''):
-                plt.suptitle('CERN SPS H8 Beamline', x=0.51, y=0.86, fontsize=10, color='grey')
+                plt.suptitle('CERN SPS H2 Beamline', x=0.51, y=0.86, fontsize=10, color='grey')
             else:
-                plt.suptitle('CERN SPS H8 Beamline' + '\n' + self.particle_information, x=0.51, y=0.86,
+                plt.suptitle('CERN SPS H2 Beamline' + '\n' + self.particle_information, x=0.51, y=0.86,
                              fontsize=10, color='grey')
 
         if sub_plot:
