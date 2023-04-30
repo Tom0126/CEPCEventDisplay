@@ -35,8 +35,8 @@ def getAHCALPosition(hit_x, hit_y):
     hit_x = np.around(((hit_x + 342.5491) / 40.29964)+1).astype(int)
     hit_y = np.around(((hit_y + 343.05494) / 40.29964)+1).astype(int)
 
-    hit_x=np.where(np.logical_or(hit_x>18 or hit_x<1), -1, hit_x)
-    hit_y = np.where(np.logical_or(hit_y > 18 or hit_y < 1), -1, hit_y)
+    hit_x=np.where(np.logical_or(hit_x>18,hit_x<1), -1, hit_x)
+    hit_y = np.where(np.logical_or(hit_y > 18, hit_y < 1), -1, hit_y)
     return hit_x, hit_y
 
 
