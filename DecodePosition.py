@@ -29,15 +29,15 @@ def getAHCALPosition(hit_x, hit_y):
        2: start (1,18)
        3: AHCAL'''
 
-    length = len(chips)
+
     assert len(hit_x) == len(hit_y)
 
     hit_x = np.around(((hit_x + 342.5491) / 40.29964)+1).astype(int)
-    hit_Y = np.around(((hit_y + 343.05494) / 40.29964)+1).astype(int)
+    hit_y = np.around(((hit_y + 343.05494) / 40.29964)+1).astype(int)
 
     hit_x=np.where(hit_x>18 or hit_x<1, -1, hit_x)
     hit_y = np.where(hit_y > 18 or hit_y < 1, -1, hit_y)
-    return hit_x, hit_Y
+    return hit_x, hit_y
 
 
 def getECALPosition(layers, chips, channels):
