@@ -92,7 +92,9 @@ class Window:
         # ECAL times
         self.times2 = readRootFileTimes(self.ahcal_path)
         # AHCAL layers,chips, memo_ids, channels shape (num(events), x)
-        self.layers2, self.chips2, self.memo_ids2, self.channels2 = decodeCellIDs(self.cellIDs2,)
+        self.layers2, _, _, _ = decodeCellIDs(self.cellIDs2, )
+        self.hit_x2 = getHit_X(self.ahcal_path)
+        self.hit_y2 = getHit_Y(self.ahcal_path)
 
         # AHCAL triggerIDs
         self.triggerIDs2 = getTriggerID(self.ahcal_path)
@@ -229,11 +231,11 @@ class Window:
                                    antialiased=False, rstride=1,
                                    cstride=1,
                                    color='0.8')
-        assert len(self.layers2[ahcal_entry]) == len(self.chips2[ahcal_entry])
-        assert len(self.layers2[ahcal_entry]) == len(self.channels2[ahcal_entry])
+        assert len(self.layers2[ahcal_entry]) == len(self.hit_x2[ahcal_entry])
+        assert len(self.layers2[ahcal_entry]) == len(self.hit_y2[ahcal_entry])
         assert len(self.layers2[ahcal_entry]) == len(self.times2[ahcal_entry])
 
-        x_positions2, y_positions2 = getAHCALPosition(self.chips2[ahcal_entry], self.channels2[ahcal_entry])
+        x_positions2, y_positions2 = getAHCALPosition(self.hit_x2[ahcal_entry], self.hit_y2[self.ahcal_path])
 
         for i in range(len(x_positions2)):
             # plot hit
