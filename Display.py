@@ -235,7 +235,7 @@ class Window:
         assert len(self.layers2[ahcal_entry]) == len(self.hit_y2[ahcal_entry])
         assert len(self.layers2[ahcal_entry]) == len(self.times2[ahcal_entry])
 
-        x_positions2, y_positions2 = getAHCALPosition(self.hit_x2[ahcal_entry], self.hit_y2[self.ahcal_path])
+        x_positions2, y_positions2 = getAHCALPosition(self.hit_x2[ahcal_entry], self.hit_y2[ahcal_entry])
 
         for i in range(len(x_positions2)):
             # plot hit
