@@ -24,27 +24,20 @@ def decodeCellIDs(cellIDs):
     return layers, chips, memo_ids, channels
 
 
-def getAHCALPosition(chips, channels):
+def getAHCALPosition(hit_x, hit_y):
     '''1: chips, channels: lists
        2: start (1,18)
        3: AHCAL'''
-    D = readHashSets(os.getcwd() + '/ids_postions.txt')
-    x_positions = []
-    y_positions = []
-    length = len(chips)
-    assert len(channels) == len(chips)
-    for i in range(length):
-        if chips[i] > -1 and chips[i] < 9 and channels[i] > -1 and channels[i] < 36:
-            positions = D.get(channels[i] + (chips[i] % 3) * 36)
-            x_position = 1 + positions[0]
-            y_position = 18 - positions[1] - 6 * ((chips[i]) // 3)
-            x_positions.append(x_position)
-            y_positions.append(y_position)
-        else:
-            x_positions.append(-1)
-            y_positions.append(-1)
 
-    return x_positions, y_positions
+    length = len(chips)
+    assert len(hit_x) == len(hit_y)
+
+    hit_x = np.around(((hit_x + 342.5491) / 40.29964)+1).astype(int)
+    hit_Y = np.around(((hit_y + 343.05494) / 40.29964)+1).astype(int)
+
+    hit_x=np.where(hit_x>18 or hit_x<1, -1, hit_x)
+    hit_y = np.where(hit_y > 18 or hit_y < 1, -1, hit_y)
+    return hit_x, hit_Y
 
 
 def getECALPosition(layers, chips, channels):
