@@ -27,4 +27,4 @@ Two running PyShow methods are provided here.
 	
 		python Display.py --e_path <xxx> --a_path <xxx> --e_en <xxx> --a_en <xxx>
 		
-	You can find the figure in the Result dir.
+	   You can find the figure in the Result dir.
