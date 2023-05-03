@@ -9,7 +9,7 @@ After you have successfully installed it, enter the directory:
 
 		cd CEPCEventDisplay
 		
-If you run it in the Test Beam Server, you can use the python environment I have pre-installed:
+If you run it in the Test Beam Server (@cepcecalserver.cern.ch), you can use the python environment I have pre-installed:
 
 		source conda_setup.sh
 
