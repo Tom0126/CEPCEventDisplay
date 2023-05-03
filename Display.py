@@ -118,9 +118,11 @@ class Window:
         ax = fig.add_subplot(projection='3d')
         plt.gca().set_box_aspect((1, 2, 1))
 
+        times_ecal=np.abs(self.times[ecal_entry])
+        times_ahcal=np.abs(self.times2[ahcal_entry])
         # max times: uesd for color display
-        max_times1 = np.amax(self.times[ecal_entry])
-        max_times2 = np.amax(self.times2[ahcal_entry])
+        max_times1 = np.amax(times_ecal)
+        max_times2 = np.amax(times_ahcal)
         max_times=max(max_times1,max_times2)
         alpha_frame=0.1
 
@@ -181,8 +183,8 @@ class Window:
                 y2 = np.ones((2,2)) * (1+layer_index//2*19.9+self.ECAL_y_trans)
                 surf2 = ax.plot_surface(x2, y2, z2, alpha=0.8, linewidth=0.1,
                                         antialiased=False, rstride=1, cstride=1,
-                                        color=((1 - self.times[ecal_entry][i] / max_times) ** 2
-                                               , (1 - self.times[ecal_entry][i] / max_times) ** 2
+                                        color=((1 - times_ecal[i] / max_times) ** 2
+                                               , (1 - times_ecal[i] / max_times) ** 2
                                                , 1))
             else:
 
@@ -192,8 +194,8 @@ class Window:
                 y2 = np.ones((2,2)) * (12.2+(layer_index-1)//2*19.9+self.ECAL_y_trans)
                 surf2 = ax.plot_surface(x2, y2, z2, alpha=0.8, linewidth=0.1,
                                         antialiased=False, rstride=1, cstride=1,
-                                        color=((1 - self.times[ecal_entry][i] / max_times) ** 2
-                                               , (1 - self.times[ecal_entry][i] / max_times) ** 2
+                                        color=((1 - times_ecal[i] / max_times) ** 2
+                                               , (1 - times_ecal[i] / max_times) ** 2
                                                , 1))
 
         # AHCAL Part
@@ -251,8 +253,8 @@ class Window:
 
                 surf2 = ax.plot_surface(x2_AHCAL, y2_AHCAL, z2_AHCAL, alpha=0.8, linewidth=0.1,
                                         antialiased=False, rstride=1, cstride=1,
-                                        color=((1 - self.times2[ahcal_entry][i] / max_times) ** 2
-                                               , (1 - self.times2[ahcal_entry][i] / max_times) ** 2
+                                        color=((1 - times_ahcal[i] / max_times) ** 2
+                                               , (1 - times_ahcal[i] / max_times) ** 2
                                                , 1))
 
 
@@ -295,8 +297,8 @@ class Window:
 
 if __name__ == '__main__':
 
-    ecal_path='/home/songsy/CEPCEventDisplay/data/mnt2/ScECAL/2023/Result/calib/mu-/100GeV/ECAL_Run10_20230425_003153.root'
-    ahcal_path='/home/songsy/CEPCEventDisplay/data/mnt2/AHCAL/PublicAna/2023/BeamAna/result/mu-/100GeV/AHCAL_Run10_20230425_003339.root'
+    ecal_path='/home/songsy/CEPCEventDisplay/data/mnt2/ScECAL/2023/Result/calib/pi-/350GeV/ECAL_Run169_20230503_002941.root'
+    ahcal_path='/home/songsy/CEPCEventDisplay/data/mnt2/AHCAL/PublicAna/2023/BeamAna/result/pi-/350GeV/AHCAL_Run169_20230503_003052.root'
     ecal_entry=0
     ahcal_entry=0
     save_dir='Result' #directory
