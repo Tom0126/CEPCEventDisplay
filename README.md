@@ -25,4 +25,6 @@ Two running PyShow methods are provided here.
 	2. In a more linux way, where e_path is the ecal root file path, a_path is the ahcal root file path,
 	e_en is the specified ecal entry_no, a_en is the specified ahcal entry_no:
 	
-		python Display.py --e_path xxx --a_path xxx --e_en xxx --a_en xxx
+		python Display.py --e_path <xxx> --a_path <xxx> --e_en <xxx> --a_en <xxx>
+		
+	You can find the figure in the Result dir.
