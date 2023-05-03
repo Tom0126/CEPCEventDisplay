@@ -20,7 +20,7 @@ Two running PyShow methods are provided here.
 	1. If you can open a gui window in your terminal, it is highly recomened using PyShow in this way.
 	You just need to input both of ecal and ahcal root file path, and don't forget to click "start" :
 	
-		python AHCAL_ECAL_Mac.py
+		python AHCAL_ECAL_mac.py
 		
 	2. In a more linux way, where e_path is the ecal root file path, a_path is the ahcal root file path,
 	e_en is the specified ecal entry_no, a_en is the specified ahcal entry_no:
