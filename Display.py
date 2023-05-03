@@ -299,7 +299,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     # base setting
 
-    parser.add_argument("--e_path", type=str, help="ecal path.")
+    parser.add_argument("-==", type=str, help="ecal path.")
     parser.add_argument("--a_path", type=str, help="ahcal path.")
     parser.add_argument("--e_en", type=int, help="ecal entry.")
     parser.add_argument("--a_en", type=int, help="ahcal entry.")
