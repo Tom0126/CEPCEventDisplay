@@ -17,7 +17,7 @@ If you run it in the Test Beam Server (@cepcecalserver.cern.ch), you can use the
 Two running PyShow methods are provided here. 
 
 
-	1. If you can open a gui window in your terminal, it is highly recomened using PyShow in this way. Don't forget to click "start".:
+	1. If you can open a gui window in your terminal, it is highly recomened using PyShow in this way. You just need to input both of ecal and ahcal root file path, and don't forget to click "start" :
 	
 		python AHCAL_ECAL_Mac.py
 		
