@@ -461,10 +461,12 @@ class Window:
         fig = plt.figure(figsize=figsize, dpi=dpi)
         ax = fig.add_subplot(projection='3d')
         plt.gca().set_box_aspect((1, 2, 1))
+        times_ecal = np.abs(self.times[self.entry])
+        times_ahcal = np.abs(self.times2[self.entry2])
         # max times: uesd for color display
-        max_times1 = np.max(self.times[self.entry])
-        max_times2 = np.max(self.times2[self.entry2])
-        max_times=max(max_times1,max_times2)
+        max_times1 = np.amax(times_ecal)
+        max_times2 = np.amax(times_ahcal)
+        max_times = max(max_times1, max_times2)
         alpha_frame=0.1
         # ECAL part
         # Plot the surface.
@@ -542,8 +544,8 @@ class Window:
                 y2 = np.ones((2,2)) * (1+layer_index//2*19.9+self.ECAL_y_trans)
                 surf2 = ax.plot_surface(x2, y2, z2, alpha=0.8, linewidth=0.1,
                                         antialiased=False, rstride=1, cstride=1,
-                                        color=((1 - self.times[self.entry][i] / max_times) ** 2
-                                               , (1 - self.times[self.entry][i] / max_times) ** 2
+                                        color=((1 - times_ecal[i] / max_times) ** 100
+                                               , (1 - times_ecal[i] / max_times) ** 100
                                                , 1))
             else:
 
@@ -553,8 +555,8 @@ class Window:
                 y2 = np.ones((2,2)) * (12.2+(layer_index-1)//2*19.9+self.ECAL_y_trans)
                 surf2 = ax.plot_surface(x2, y2, z2, alpha=0.8, linewidth=0.1,
                                         antialiased=False, rstride=1, cstride=1,
-                                        color=((1 - self.times[self.entry][i] / max_times) ** 2
-                                               , (1 - self.times[self.entry][i] / max_times) ** 2
+                                        color=((1 - times_ecal[i] / max_times) ** 100
+                                               , (1 - times_ecal[i] / max_times) ** 100
                                                , 1))
 
         # AHCAL Part
@@ -617,8 +619,8 @@ class Window:
 
                 surf2 = ax.plot_surface(x2_AHCAL, y2_AHCAL, z2_AHCAL, alpha=0.8, linewidth=0.1,
                                         antialiased=False, rstride=1, cstride=1,
-                                        color=((1 - self.times2[self.entry2][i] / max_times) ** 2
-                                               , (1 - self.times2[self.entry2][i] / max_times) ** 2
+                                        color=((1 - times_ahcal[i] / max_times) ** 100
+                                               , (1 - times_ahcal[i] / max_times) ** 100
                                                , 1))
 
 

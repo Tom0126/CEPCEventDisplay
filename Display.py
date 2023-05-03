@@ -183,8 +183,8 @@ class Window:
                 y2 = np.ones((2,2)) * (1+layer_index//2*19.9+self.ECAL_y_trans)
                 surf2 = ax.plot_surface(x2, y2, z2, alpha=0.8, linewidth=0.1,
                                         antialiased=False, rstride=1, cstride=1,
-                                        color=((1 - times_ecal[i] / max_times) ** 2
-                                               , (1 - times_ecal[i] / max_times) ** 2
+                                        color=((1 - times_ecal[i] / max_times) ** 100
+                                               , (1 - times_ecal[i] / max_times) ** 100
                                                , 1))
             else:
 
@@ -194,8 +194,8 @@ class Window:
                 y2 = np.ones((2,2)) * (12.2+(layer_index-1)//2*19.9+self.ECAL_y_trans)
                 surf2 = ax.plot_surface(x2, y2, z2, alpha=0.8, linewidth=0.1,
                                         antialiased=False, rstride=1, cstride=1,
-                                        color=((1 - times_ecal[i] / max_times) ** 2
-                                               , (1 - times_ecal[i] / max_times) ** 2
+                                        color=((1 - times_ecal[i] / max_times) ** 100
+                                               , (1 - times_ecal[i] / max_times) ** 100
                                                , 1))
 
         # AHCAL Part
@@ -253,8 +253,8 @@ class Window:
 
                 surf2 = ax.plot_surface(x2_AHCAL, y2_AHCAL, z2_AHCAL, alpha=0.8, linewidth=0.1,
                                         antialiased=False, rstride=1, cstride=1,
-                                        color=((1 - times_ahcal[i] / max_times) ** 2
-                                               , (1 - times_ahcal[i] / max_times) ** 2
+                                        color=((1 - times_ahcal[i] / max_times) ** 100
+                                               , (1 - times_ahcal[i] / max_times) ** 100
                                                , 1))
 
 
@@ -307,6 +307,9 @@ if __name__ == '__main__':
     display=Window(ecal_path=ecal_path,ahcal_path=ahcal_path)
     display.plotHit(ecal_entry=ecal_entry,ahcal_entry=ahcal_entry,save_dir=save_dir)
     display.plotHit(ecal_entry=5, ahcal_entry=6,save_dir=save_dir)
+
+    for i in range(100,200):
+        display.plotHit(ecal_entry=i, ahcal_entry=i+1, save_dir=save_dir)
 
 
     pass
