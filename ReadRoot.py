@@ -83,6 +83,31 @@ def getTriggerID(path):
     triggerID = data['Event_Num']
     return triggerID
 
+def getHit_X(path):
+    '''before calib: choose ahcal or not
+       after calib: choose calib or not
+    '''
+    file = uproot.open(path)
+
+    event = file['Calib_Hit']
+
+    # Get data->numpy
+    data = event.arrays(library="np")
+    Hit_X = data['Hit_X']
+    return Hit_X
+
+def getHit_Y(path):
+    '''before calib: choose ahcal or not
+       after calib: choose calib or not
+    '''
+    file = uproot.open(path)
+
+    event = file['Calib_Hit']
+
+    # Get data->numpy
+    data = event.arrays(library="np")
+    Hit_Y = data['Hit_Y']
+    return Hit_Y
 
 def getLocation(path, calib=True):
     file = uproot.open(path)

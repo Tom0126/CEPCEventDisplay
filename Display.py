@@ -92,7 +92,9 @@ class Window:
         # ECAL times
         self.times2 = readRootFileTimes(self.ahcal_path)
         # AHCAL layers,chips, memo_ids, channels shape (num(events), x)
-        self.layers2, self.chips2, self.memo_ids2, self.channels2 = decodeCellIDs(self.cellIDs2,)
+        self.layers2, _, _, _ = decodeCellIDs(self.cellIDs2, )
+        self.hit_x2 = getHit_X(self.ahcal_path)
+        self.hit_y2 = getHit_Y(self.ahcal_path)
 
         # AHCAL triggerIDs
         self.triggerIDs2 = getTriggerID(self.ahcal_path)
@@ -116,9 +118,11 @@ class Window:
         ax = fig.add_subplot(projection='3d')
         plt.gca().set_box_aspect((1, 2, 1))
 
+        times_ecal=np.abs(self.times[ecal_entry])
+        times_ahcal=np.abs(self.times2[ahcal_entry])
         # max times: uesd for color display
-        max_times1 = np.amax(self.times[ecal_entry])
-        max_times2 = np.amax(self.times2[ahcal_entry])
+        max_times1 = np.amax(times_ecal)
+        max_times2 = np.amax(times_ahcal)
         max_times=max(max_times1,max_times2)
         alpha_frame=0.1
 
@@ -179,8 +183,8 @@ class Window:
                 y2 = np.ones((2,2)) * (1+layer_index//2*19.9+self.ECAL_y_trans)
                 surf2 = ax.plot_surface(x2, y2, z2, alpha=0.8, linewidth=0.1,
                                         antialiased=False, rstride=1, cstride=1,
-                                        color=((1 - self.times[ecal_entry][i] / max_times) ** 2
-                                               , (1 - self.times[ecal_entry][i] / max_times) ** 2
+                                        color=((1 - times_ecal[i] / max_times) ** 100
+                                               , (1 - times_ecal[i] / max_times) ** 100
                                                , 1))
             else:
 
@@ -190,8 +194,8 @@ class Window:
                 y2 = np.ones((2,2)) * (12.2+(layer_index-1)//2*19.9+self.ECAL_y_trans)
                 surf2 = ax.plot_surface(x2, y2, z2, alpha=0.8, linewidth=0.1,
                                         antialiased=False, rstride=1, cstride=1,
-                                        color=((1 - self.times[ecal_entry][i] / max_times) ** 2
-                                               , (1 - self.times[ecal_entry][i] / max_times) ** 2
+                                        color=((1 - times_ecal[i] / max_times) ** 100
+                                               , (1 - times_ecal[i] / max_times) ** 100
                                                , 1))
 
         # AHCAL Part
@@ -229,11 +233,11 @@ class Window:
                                    antialiased=False, rstride=1,
                                    cstride=1,
                                    color='0.8')
-        assert len(self.layers2[ahcal_entry]) == len(self.chips2[ahcal_entry])
-        assert len(self.layers2[ahcal_entry]) == len(self.channels2[ahcal_entry])
+        assert len(self.layers2[ahcal_entry]) == len(self.hit_x2[ahcal_entry])
+        assert len(self.layers2[ahcal_entry]) == len(self.hit_y2[ahcal_entry])
         assert len(self.layers2[ahcal_entry]) == len(self.times2[ahcal_entry])
 
-        x_positions2, y_positions2 = getAHCALPosition(self.chips2[ahcal_entry], self.channels2[ahcal_entry])
+        x_positions2, y_positions2 = getAHCALPosition(self.hit_x2[ahcal_entry], self.hit_y2[ahcal_entry])
 
         for i in range(len(x_positions2)):
             # plot hit
@@ -249,8 +253,8 @@ class Window:
 
                 surf2 = ax.plot_surface(x2_AHCAL, y2_AHCAL, z2_AHCAL, alpha=0.8, linewidth=0.1,
                                         antialiased=False, rstride=1, cstride=1,
-                                        color=((1 - self.times2[ahcal_entry][i] / max_times) ** 2
-                                               , (1 - self.times2[ahcal_entry][i] / max_times) ** 2
+                                        color=((1 - times_ahcal[i] / max_times) ** 100
+                                               , (1 - times_ahcal[i] / max_times) ** 100
                                                , 1))
 
 
@@ -307,7 +311,6 @@ if __name__ == '__main__':
         os.mkdir(save_dir)
     display=Window(ecal_path=args.e_path,ahcal_path=args.a_path)
     display.plotHit(ecal_entry=args.e_en,ahcal_entry=args.a_en,save_dir=save_dir)
-
 
 
     pass
