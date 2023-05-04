@@ -1,4 +1,4 @@
-git # CEPCEventDisplay
+# **CEPCEventDisplay**
 
 
 You can install PyShow in any directory:
