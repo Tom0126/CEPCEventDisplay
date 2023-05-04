@@ -14,7 +14,7 @@ If you run it in the Test Beam Server (@cepcecalserver.cern.ch), you can use the
 		source conda_setup.sh
 
 
-Two running PyShow methods are provided here. 
+Two running PyShow methods are provided here. Be careful, it was specified to display calibrated root file.
 
 
 	1. If you can open a gui window in your terminal, it is highly recomened using PyShow in this way.
