@@ -301,8 +301,8 @@ if __name__ == '__main__':
 
     parser.add_argument("--e_path", type=str, help="ecal path.")
     parser.add_argument("--a_path", type=str, help="ahcal path.")
-    parser.add_argument("--e_en", type=int, help="ecal entry.")
-    parser.add_argument("--a_en", type=int, help="ahcal entry.")
+    parser.add_argument("--e_en", type=int,default=0, help="ecal entry.")
+    parser.add_argument("--a_en", type=int,default=0, help="ahcal entry.")
 
     args = parser.parse_args()
 
