@@ -297,8 +297,8 @@ class Window:
 
 if __name__ == '__main__':
 
-    ecal_path='/home/songsy/CEPCEventDisplay/data/mnt2/ScECAL/2023/Result/calib/e-/60GeV/ECAL_Run100_20230430_040636.root'
-    ahcal_path='/home/songsy/CEPCEventDisplay/data/mnt2/AHCAL/PublicAna/2023/BeamAna/result/e-/60GeV/AHCAL_Run100_20230430_040806.root'
+    ecal_path='/home/songsy/CEPCEventDisplay/data/mnt2/ScECAL/2023/Result/calib/pi-/60GeV/ECAL_Run69_20230428_043540.root'
+    ahcal_path='/home/songsy/CEPCEventDisplay/data/mnt2/AHCAL/PublicAna/2023/BeamAna/result/pi-/60GeV/AHCAL_Run69_20230428_043704.root'
     ecal_entry=0
     ahcal_entry=0
     save_dir='Result' #directory
