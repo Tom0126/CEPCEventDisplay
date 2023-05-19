@@ -111,7 +111,7 @@ class Window:
         hf_zx, hf_zy = np.meshgrid(lh1, lh2)
         frame_unit = np.ones(hf_xy.shape)
 
-    def plotHit(self,ecal_entry,ahcal_entry,save_dir,):
+    def plotHit(self,ecal_entry,ahcal_entry,save_dir,pj1=30,pj2=-40):
         '''
         1. x_ticks, y_ticks, z_tick related to the ax.set_{}ticks, not about the axis in fig.
         2. y_ticks = z axis '''
@@ -295,7 +295,7 @@ class Window:
         ax.set_zlabel('Y [cm]', fontsize=7)
 
 
-        ax.view_init(30, -40)
+        ax.view_init(pj1, pj2)
 
         # remove the background meshgrid
         ax.grid(False)
@@ -321,8 +321,10 @@ if __name__ == '__main__':
     display.plotHit(ecal_entry=ecal_entry,ahcal_entry=ahcal_entry,save_dir=save_dir)
     display.plotHit(ecal_entry=5, ahcal_entry=6,save_dir=save_dir)
 
-    for i in range(100,200):
-        display.plotHit(ecal_entry=i, ahcal_entry=i+1, save_dir=save_dir)
+    # for i in range(100,200):
+    #     display.plotHit(ecal_entry=i, ahcal_entry=i+1, save_dir=save_dir)
+
+    display.plotHit(ecal_entry=181, ahcal_entry=182, save_dir=save_dir,pj1=10,pj2=6)
 
 
     pass
