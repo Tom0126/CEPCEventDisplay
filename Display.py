@@ -1,3 +1,4 @@
+import numpy as np
 
 from DecodePosition import *
 
@@ -120,6 +121,10 @@ class Window:
 
         times_ecal=np.abs(self.times[ecal_entry])
         times_ahcal=np.abs(self.times2[ahcal_entry])
+
+        e_dep_ecal=np.sum(self.times[ecal_entry])
+        e_dep_ahcal=np.sum(self.times2[ahcal_entry])
+
         # max times: uesd for color display
         max_times1 = np.amax(times_ecal)
         max_times2 = np.amax(times_ahcal)
@@ -272,6 +277,13 @@ class Window:
         ax.text(self.AHCAL_scale_factor*(1+self.AHCAL_x_trans)-ahcal_padding-50, 750,
                 self.AHCAL_scale_factor*(self.scale +self.AHCAL_x_trans)+ahcal_padding+50, "AHCAL",'y', color='Black')
 
+        ax.text(self.AHCAL_scale_factor * (1 + self.AHCAL_x_trans) - ahcal_padding - 50, 750,
+                self.AHCAL_scale_factor * (self.scale + self.AHCAL_x_trans) + ahcal_padding + 50, "AHCAL", 'y',
+                color='Black')
+
+        ax.text2D(0.05, 0.95, "Test Beam", transform=ax.transAxes,fontsize=15, fontstyle='oblique', fontweight='bold',)
+        ax.text2D(0.05, 0.9, "AHCAL E_Dep @{} MeV".format(round(e_dep_ahcal)), transform=ax.transAxes, fontsize=10, )
+        ax.text2D(0.05, 0.85, "ECAL E_Dep @{} MeV".format(round(e_dep_ecal)), transform=ax.transAxes, fontsize=10,  )
 
 
         ax.tick_params(labelsize=7)
@@ -294,11 +306,12 @@ class Window:
 
         save_path=os.path.join(save_dir,'{}_{}.png'.format(ecal_entry,ahcal_entry))
         plt.savefig(save_path)
+        plt.close(fig)
 
 if __name__ == '__main__':
 
-    ecal_path='/home/songsy/CEPCEventDisplay/data/mnt2/ScECAL/2023/Result/calib/pi-/60GeV/ECAL_Run69_20230428_043540.root'
-    ahcal_path='/home/songsy/CEPCEventDisplay/data/mnt2/AHCAL/PublicAna/2023/BeamAna/result/pi-/60GeV/AHCAL_Run69_20230428_043704.root'
+    ecal_path='/home/songsy/CEPCEventDisplay/data/mnt2/ScECAL/2023/Result_PS/calib/pi-/1GeV/ECAL_Run35_20230519_225614.root'
+    ahcal_path='/home/songsy/CEPCEventDisplay/data/mnt2/AHCAL/PublicAna/2023/BeamAna/result/PS/pi-/1GeV/AHCAL_Run35_20230519_165558.root'
     ecal_entry=0
     ahcal_entry=0
     save_dir='Result' #directory
