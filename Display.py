@@ -3,7 +3,7 @@ import numpy as np
 from DecodePosition import *
 
 from ReadRoot import *
-
+from ana_ckv import select_data
 
 # In this version, only read valid triggerIDs
 
@@ -310,26 +310,18 @@ class Window:
 
 if __name__ == '__main__':
 
-    ecal_path='/home/songsy/CEPCEventDisplay/data/mnt2/ScECAL/2023/Result_PS/calib/pi-/5GeV/ECAL_Run47_20230521_075205.root'
-    ahcal_path='/home/songsy/CEPCEventDisplay/data/mnt2/AHCAL/PublicAna/2023/BeamAna/result/PS/pi-/5GeV/AHCAL_Run47_20230521_075141.root'
-    ecal_entry=0
-    ahcal_entry=0
-    save_dir='Result_run47' #directory
+    ecal_path='/home/songsy/CEPCEventDisplay/data/mnt2/ScECAL/2023/Result_PS/calib/pi-/8GeV/ECAL_Run40_20230520_094213.root'
+    ahcal_path='/home/songsy/CEPCEventDisplay/data/mnt2/AHCAL/PublicAna/2023/BeamAna/result/PS/pi-/8GeV/AHCAL_Run40_20230520_094150.root'
+
+    save_dir='Result_run40' #directory
     if not os.path.exists(save_dir):
         os.mkdir(save_dir)
     display=Window(ecal_path=ecal_path,ahcal_path=ahcal_path)
 
 
-    # for i in range(100,200):
-    #     display.plotHit(ecal_entry=i, ahcal_entry=i+1, save_dir=save_dir)
+    run_index=select_data(ahcal_file_path=ahcal_path,ecal_file_path=ecal_path,use_ckv_info=False,statistics=100)
 
-    # display.plotHit(ecal_entry=181, ahcal_entry=182, save_dir=save_dir,pj1=10,pj2=6)
-
-
-    run_47_p_bar_path='/home/songsy/CEPC_2023TB/ahcal_ana/npy_file/run47_ckv_pbar.npy'
-    run_47_p_bar=np.load(run_47_p_bar_path)
-
-    for i,index_pair in enumerate(run_47_p_bar):
+    for i,index_pair in enumerate(run_index):
         display.plotHit(ecal_entry=index_pair[0], ahcal_entry=index_pair[1], save_dir=save_dir)
         print('The {}th fig done!'.format(i))
 
